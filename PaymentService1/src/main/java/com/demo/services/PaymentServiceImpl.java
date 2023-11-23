@@ -1,4 +1,4 @@
-package com.demo.service;
+package com.demo.services;
 
 import java.util.List;
 
@@ -39,17 +39,15 @@ public class PaymentServiceImpl implements PaymentService {
 	}
 
 	// method to retrieve payment by id
-	
-		public ResponseEntity<PaymentDto> paymentInfoById(long id) {
-			Payment existingPayment = paymentRepo.findById(id)
-					.orElseThrow(() -> new PaymentNotFoundException("Payment with Id " + id + " not found"));
-			PaymentDto responseDto = mapToDto(existingPayment);
-			return new ResponseEntity<PaymentDto>(responseDto, HttpStatus.OK);
-		}
+	public ResponseEntity<PaymentDto> paymentInfoById(long id) {
+		Payment existingPayment = paymentRepo.findById(id)
+				.orElseThrow(() -> new PaymentNotFoundException("Payment with Id " + id + " not found"));
+		PaymentDto responseDto = mapToDto(existingPayment);
+		return new ResponseEntity<PaymentDto>(responseDto, HttpStatus.OK);
+	}
 
 	// method to retrieve all the payments from db
-		
-	    public ResponseEntity<List<PaymentDto>> allPaymentsInfo() {
+	public ResponseEntity<List<PaymentDto>> allPaymentsInfo() {
 		List<Payment> payments = paymentRepo.findAll();
 		List<PaymentDto> responseList = payments.stream().map(payment -> mapToDto(payment)).toList();
 		return new ResponseEntity<>(responseList, HttpStatus.OK);
